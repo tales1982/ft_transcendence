@@ -1,0 +1,25 @@
+{
+  "app": { "title": "Transcendence" },
+  "auth": {
+    "login": "Login",
+    "register": "Create account",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "displayName": "Display name",
+    "displayNamePlaceholder": "What should we call you?",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "loginSuccess": "Connected successfully!",
+    "registerSuccess": "Account created successfully!",
+    "loginError": "Invalid email or password",
+    "registerError": "Failed to create account",
+    "passwordMismatch": "Passwords do not match"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
+  }
+}

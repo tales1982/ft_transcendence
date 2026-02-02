@@ -1,0 +1,20 @@
+# Environment files
+.env
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Vault data (for local dev)
+vault/data/
+
+docs

@@ -1,0 +1,148 @@
+services:
+  # ============================================
+  # VAULT - Secret Management
+  # ============================================
+  vault:
+    image: hashicorp/vault:1.15
+    container_name: transcendence-vault
+    ports:
+      - "8200:8200"
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: transcendence-root-token
+      VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8200
+      VAULT_ADDR: http://127.0.0.1:8200
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - vault-data:/vault/data
+      - ./vault/config:/vault/config
+      - ./vault/policies:/vault/policies
+    command: server -dev
+    networks:
+      - transcendence-network
+    healthcheck:
+      test: ["CMD", "sh", "-c", "VAULT_ADDR=http://127.0.0.1:8200 vault status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================
+  # VAULT INIT - Initialize secrets
+  # ============================================
+  vault-init:
+    image: hashicorp/vault:1.15
+    container_name: transcendence-vault-init
+    depends_on:
+      vault:
+        condition: service_healthy
+    environment:
+      VAULT_ADDR: http://vault:8200
+      VAULT_TOKEN: transcendence-root-token
+    volumes:
+      - ./scripts:/scripts
+    entrypoint: /scripts/init-vault.sh
+    networks:
+      - transcendence-network
+
+  # ============================================
+  # POSTGRESQL 17
+  # ============================================
+  postgres:
+    image: postgres:17-alpine
+    container_name: transcendence-postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: transcendence
+      POSTGRES_USER: ${DB_USERNAME:-transcendence}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-transcendence123}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - transcendence-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-transcendence} -d transcendence"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================
+  # PGADMIN - Database Management UI
+  # ============================================
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: transcendence-pgadmin
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@transcendence.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - transcendence-network
+
+  # ============================================
+  # BACKEND - Spring Boot
+  # ============================================
+  backend:
+    build:
+      context: ./transcendence-back
+      dockerfile: Dockerfile
+    container_name: transcendence-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      VAULT_TOKEN: transcendence-root-token
+      DB_USERNAME: ${DB_USERNAME:-transcendence}
+      DB_PASSWORD: ${DB_PASSWORD:-transcendence123}
+      JWT_SECRET: ${JWT_SECRET:-bXlTZWNyZXRLZXlGb3JKV1RUb2tlbkdlbmVyYXRpb25UaGF0SXNBdExlYXN0MjU2Qml0c0xvbmcxMjM0NTY3ODk=}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      vault-init:
+        condition: service_completed_successfully
+    networks:
+      - transcendence-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/actuator/health", "||", "exit", "1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ============================================
+  # FRONTEND - React/Vite
+  # ============================================
+  frontend:
+    build:
+      context: ./transcendence-front
+      dockerfile: Dockerfile
+    container_name: transcendence-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - transcendence-network
+
+# ============================================
+# NETWORKS
+# ============================================
+networks:
+  transcendence-network:
+    driver: bridge
+
+# ============================================
+# VOLUMES
+# ============================================
+volumes:
+  postgres-data:
+  vault-data:
+  pgadmin-data:

@@ -1,0 +1,25 @@
+{
+  "app": { "title": "Transcendence" },
+  "auth": {
+    "login": "Connexion",
+    "register": "Créer un compte",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "displayName": "Nom d'utilisateur",
+    "displayNamePlaceholder": "Comment voulez-vous être appelé?",
+    "submit": "Envoyer",
+    "loading": "Chargement...",
+    "loginSuccess": "Connecté avec succès!",
+    "registerSuccess": "Compte créé avec succès!",
+    "loginError": "E-mail ou mot de passe invalide",
+    "registerError": "Échec de la création du compte",
+    "passwordMismatch": "Les mots de passe ne correspondent pas"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "login": "Connexion",
+    "register": "Inscription",
+    "logout": "Déconnexion"
+  }
+}
