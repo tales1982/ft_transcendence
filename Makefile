@@ -2,7 +2,7 @@
 # Transcendence Makefile
 # ============================================
 
-.PHONY: help up down build logs clean rebuild frontend backend postgres vault
+.PHONY: help up down build logs clean rebuild frontend backend postgres vault diagnose
 
 # Default target
 help:
@@ -20,6 +20,7 @@ help:
 	@echo "║  make backend   → Logs do backend                            ║"
 	@echo "║  make postgres  → Acessa o PostgreSQL via psql               ║"
 	@echo "║  make vault     → Abre o Vault UI                            ║"
+	@echo "║  make diagnose  → Executa diagnóstico de problemas           ║"
 	@echo "╚══════════════════════════════════════════════════════════════╝"
 
 # Start all services
@@ -77,3 +78,7 @@ vault:
 	@echo "   URL: http://localhost:8200"
 	@echo "   Token: transcendence-root-token"
 	xdg-open http://localhost:8200 2>/dev/null || open http://localhost:8200 2>/dev/null || echo "Open http://localhost:8200 in your browser"
+
+# Run diagnostics
+diagnose:
+	@./scripts/diagnose.sh

@@ -11,20 +11,18 @@ services:
       VAULT_DEV_ROOT_TOKEN_ID: transcendence-root-token
       VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8200
       VAULT_ADDR: http://127.0.0.1:8200
-    cap_add:
-      - IPC_LOCK
+      SKIP_SETCAP: "true"
     volumes:
       - vault-data:/vault/data
-      - ./vault/config:/vault/config
-      - ./vault/policies:/vault/policies
     command: server -dev
     networks:
       - transcendence-network
     healthcheck:
-      test: ["CMD", "sh", "-c", "VAULT_ADDR=http://127.0.0.1:8200 vault status"]
+      test: ["CMD", "sh", "-c", "VAULT_ADDR=http://127.0.0.1:8200 vault status || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 10s
 
   # ============================================
   # VAULT INIT - Initialize secrets
@@ -62,10 +60,11 @@ services:
     networks:
       - transcendence-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-transcendence} -d transcendence"]
+      test: ["CMD-SHELL", "pg_isready -U transcendence -d transcendence || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 10s
 
   # ============================================
   # PGADMIN - Database Management UI
