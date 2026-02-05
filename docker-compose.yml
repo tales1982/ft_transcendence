@@ -117,15 +117,20 @@ services:
       start_period: 40s
 
   # ============================================
-  # FRONTEND - React/Vite
+  # FRONTEND - React/Vite (Development with Hot Reload)
   # ============================================
   frontend:
     build:
       context: ./transcendence-front
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: transcendence-frontend
     ports:
-      - "3000:80"
+      - "3000:3000"
+    volumes:
+      - ./transcendence-front:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     depends_on:
       - backend
     networks:
