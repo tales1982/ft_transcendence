@@ -50,7 +50,7 @@ export function Navbar() {
       <Row>
         <Left>
           <strong>{t("app.title")}</strong>
-          <NavLink to="/">{t("nav.dashboard")}</NavLink>
+          <NavLink to="/dashboard">{t("nav.dashboard")}</NavLink>
           <NavLink to="/login">{t("nav.login")}</NavLink>
           <NavLink to="/register">{t("nav.register")}</NavLink>
         </Left>
