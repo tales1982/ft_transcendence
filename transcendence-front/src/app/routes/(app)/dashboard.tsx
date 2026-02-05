@@ -9,6 +9,7 @@ function DashboardPage() {
     <div>
       <h1>Dashboard</h1>
       <p>Bem-vindo ao Transcendence!</p>
+      <p>teste ola caraio</p>
     </div>
   );
 }
