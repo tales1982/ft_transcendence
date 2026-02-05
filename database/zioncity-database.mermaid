@@ -1,0 +1,218 @@
+erDiagram
+    %% ========== USUÁRIOS E PERFIL ==========
+    users {
+        uuid id PK
+        varchar email UK
+        varchar password_hash
+        varchar status "ACTIVE, SUSPENDED"
+        timestamp created_at
+        timestamp updated_at
+        timestamp last_login_at
+    }
+
+    user_profile {
+        uuid user_id PK,FK
+        varchar full_name
+        varchar country
+        varchar phone
+        varchar address
+        varchar avatar_url
+        timestamp updated_at
+    }
+
+    user_wallets {
+        uuid id PK
+        uuid user_id FK
+        int chain_id
+        varchar address UK
+        boolean is_primary
+        timestamp connected_at
+        timestamp disconnected_at
+    }
+
+    %% ========== MARKETPLACE (TASKS) ==========
+    task_categories {
+        uuid id PK
+        varchar name UK
+        boolean is_active
+    }
+
+    tasks {
+        uuid id PK
+        varchar title
+        text description
+        uuid category_id FK
+        decimal reward_amount
+        varchar currency "ZION"
+        varchar location_text
+        timestamp deadline_at
+        uuid creator_user_id FK
+        uuid taken_by_user_id FK
+        varchar status "OPEN, IN_PROGRESS, SUBMITTED, APPROVED, CANCELLED"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    task_tags {
+        uuid id PK
+        varchar tag UK
+    }
+
+    task_tag_map {
+        uuid task_id PK,FK
+        uuid tag_id PK,FK
+    }
+
+    %% ========== EXECUÇÃO E PROVA ==========
+    task_submissions {
+        uuid id PK
+        uuid task_id FK
+        uuid submitted_by_user_id FK
+        text proof_text
+        varchar status "SUBMITTED, APPROVED, REJECTED"
+        timestamp submitted_at
+        timestamp reviewed_at
+        uuid reviewed_by_user_id FK
+        text review_notes
+    }
+
+    task_attachments {
+        uuid id PK
+        uuid task_id FK
+        uuid submission_id FK
+        uuid uploaded_by_user_id FK
+        varchar file_name
+        varchar mime_type
+        bigint size_bytes
+        varchar storage_url
+        timestamp created_at
+    }
+
+    task_status_history {
+        uuid id PK
+        uuid task_id FK
+        varchar from_status
+        varchar to_status
+        uuid changed_by_user_id FK
+        timestamp changed_at
+        text reason
+    }
+
+    %% ========== CHAT ==========
+    conversations {
+        uuid id PK
+        uuid task_id FK
+        timestamp created_at
+    }
+
+    conversation_participants {
+        uuid conversation_id PK,FK
+        uuid user_id PK,FK
+        timestamp joined_at
+    }
+
+    messages {
+        uuid id PK
+        uuid conversation_id FK
+        uuid sender_user_id FK
+        text content
+        timestamp sent_at
+        timestamp read_at
+        varchar type "TEXT, SYSTEM, ATTACHMENT"
+    }
+
+    %% ========== TOKENS / PAGAMENTOS ==========
+    token_accounts {
+        uuid user_id PK,FK
+        decimal available_balance
+        decimal locked_balance
+        timestamp updated_at
+    }
+
+    token_ledger {
+        uuid id PK
+        varchar tx_type "DEPOSIT, WITHDRAW, ESCROW_LOCK, ESCROW_RELEASE, TASK_PAYOUT"
+        uuid from_user_id FK
+        uuid to_user_id FK
+        uuid task_id FK
+        decimal amount
+        varchar chain_tx_hash
+        timestamp created_at
+        jsonb metadata
+    }
+
+    task_escrows {
+        uuid task_id PK,FK
+        decimal locked_amount
+        varchar status "LOCKED, RELEASED, REFUNDED"
+        timestamp locked_at
+        timestamp released_at
+    }
+
+    %% ========== QUALIDADE E NOTIFICAÇÕES ==========
+    reviews {
+        uuid id PK
+        uuid task_id FK
+        uuid from_user_id FK
+        uuid to_user_id FK
+        int rating "1-5"
+        text comment
+        timestamp created_at
+    }
+
+    notifications {
+        uuid id PK
+        uuid user_id FK
+        varchar type "NEW_MESSAGE, TASK_UPDATE, PAYMENT"
+        varchar title
+        text body
+        boolean is_read
+        timestamp created_at
+    }
+
+    %% ========== RELACIONAMENTOS ==========
+    
+    %% Users
+    users ||--o| user_profile : "has"
+    users ||--o{ user_wallets : "connects"
+    users ||--o| token_accounts : "has balance"
+    
+    %% Tasks
+    users ||--o{ tasks : "creates"
+    users ||--o{ tasks : "takes"
+    task_categories ||--o{ tasks : "categorizes"
+    
+    %% Tags
+    tasks ||--o{ task_tag_map : "has"
+    task_tags ||--o{ task_tag_map : "tagged in"
+    
+    %% Submissions & Attachments
+    tasks ||--o{ task_submissions : "has"
+    users ||--o{ task_submissions : "submits"
+    users ||--o{ task_submissions : "reviews"
+    tasks ||--o{ task_attachments : "has"
+    task_submissions ||--o{ task_attachments : "includes"
+    users ||--o{ task_attachments : "uploads"
+    
+    %% Status History
+    tasks ||--o{ task_status_history : "tracks"
+    users ||--o{ task_status_history : "changes"
+    
+    %% Chat
+    tasks ||--o{ conversations : "has"
+    conversations ||--o{ conversation_participants : "includes"
+    users ||--o{ conversation_participants : "participates"
+    conversations ||--o{ messages : "contains"
+    users ||--o{ messages : "sends"
+    
+    %% Payments
+    users ||--o{ token_ledger : "from"
+    users ||--o{ token_ledger : "to"
+    tasks ||--o{ token_ledger : "pays"
+    tasks ||--o| task_escrows : "locks"
+    
+    %% Reviews & Notifications
+    tasks ||--o{ reviews : "receives"
+    users ||--o{ reviews : "gives"
+    users ||--o{ reviews : "receives"
+    users ||--o{ notifications : "receives"
