@@ -17,4 +17,7 @@ Thumbs.db
 # Vault data (for local dev)
 vault/data/
 
+# Scripts with secrets
+scripts/init-vault.sh
+
 docs
