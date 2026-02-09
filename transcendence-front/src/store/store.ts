@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/auth.slice";
+import languageReducer from "./slices/LanguagesSlices";
 
 export const store = configureStore({
-  reducer: { auth: authReducer },
+  reducer:{ 
+    auth: authReducer,
+    language: languageReducer},
   middleware: (g) => g({ serializableCheck: false }),
 });
 
