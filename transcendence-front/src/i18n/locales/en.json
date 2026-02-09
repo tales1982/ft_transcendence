@@ -17,7 +17,7 @@
     "passwordMismatch": "Passwords do not match"
   },
   "nav": {
-    "dashboard": "Dashboard",
+    "home": "Home",
     "login": "Login",
     "register": "Register",
     "logout": "Logout"

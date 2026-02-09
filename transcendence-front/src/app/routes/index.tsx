@@ -1,15 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
+import DashboardPage from "./(app)/dashboard"
+import LanguagesSync from "../../components/layout/LanguagesSync";
 
 export const Route = createFileRoute("/")({
-  component: DashboardPage,
+  component: Index,
 });
 
-function DashboardPage() {
+function Index() {
   return (
     <div>
-      <h1>Dashboard</h1>
-      <p>Bem-vindo ao Transcendence!</p>
-      <p>teste ola caraio</p>
+      <LanguagesSync/>
+    <DashboardPage/>
     </div>
   );
 }
