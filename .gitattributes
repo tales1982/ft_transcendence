@@ -1,0 +1,38 @@
+# Enforce LF line endings for all files
+* text=auto eol=lf
+
+# Treat binary files properly
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg binary
+*.ico binary
+*.pdf binary
+*.mp4 binary
+*.mp3 binary
+*.zip binary
+*.gz binary
+*.tar binary
+
+# Mark SQL files as text
+*.sql text
+
+# Mark shell scripts as text
+*.sh text
+
+# Mark TypeScript, JavaScript, and JSX files as text
+*.ts text
+*.tsx text
+*.js text
+*.jsx text
+
+# Mark Java files as text
+*.java text
+
+# Mark YAML files as text
+*.yml text
+*.yaml text
+
+# Mark Markdown files as text
+*.md text
