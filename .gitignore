@@ -18,10 +18,4 @@ Thumbs.db
 vault/data/
 
 docs
-
-# Backend build and gradle
-transcendence-back/build/
-transcendence-back/.gradle/
-
-# Frontend node_modules and build
-transcendence-front/node_modules/
+.claude
