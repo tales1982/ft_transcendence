@@ -17,7 +17,7 @@
     "passwordMismatch": "As senhas não coincidem"
   },
   "nav": {
-    "dashboard": "Dashboard",
+    "home": "Home",
     "login": "Login",
     "register": "Registro",
     "logout": "Sair"

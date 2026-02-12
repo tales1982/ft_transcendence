@@ -6,7 +6,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-    background: ${({ theme }) => theme.colors.bg};
+    background: ${({ theme }) => theme.gradients.green};
     color: ${({ theme }) => theme.colors.text};
   }
   a { color: inherit; text-decoration: none; }
