@@ -6,7 +6,7 @@ import LanguageDropdown from "./LanguageDropdown";
 
 
 export function Navbar() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <Bar>
