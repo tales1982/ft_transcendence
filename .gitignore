@@ -25,4 +25,3 @@ transcendence-back/.gradle/
 
 # Frontend node_modules and build
 transcendence-front/node_modules/
-transcendence-front/package-lock.json
