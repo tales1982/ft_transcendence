@@ -1,11 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/auth.slice";
-import languageReducer from "./slices/LanguagesSlices";
+import tasksReducer from "./slices/tasks.slice";
+import chatReducer from "./slices/chat.slice";
+import notificationsReducer from "./slices/notifications.slice";
+import paymentReducer from "./slices/payment.slice";
 
 export const store = configureStore({
-  reducer:{ 
+  reducer: {
     auth: authReducer,
-    language: languageReducer},
+    tasks: tasksReducer,
+    chat: chatReducer,
+    notifications: notificationsReducer,
+    payment: paymentReducer,
+  },
   middleware: (g) => g({ serializableCheck: false }),
 });
 

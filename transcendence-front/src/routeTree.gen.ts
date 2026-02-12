@@ -9,11 +9,35 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './app/routes/__root'
+import { Route as TakenRouteImport } from './app/routes/taken'
+import { Route as ProfileRouteImport } from './app/routes/profile'
+import { Route as MyTasksRouteImport } from './app/routes/my-tasks'
+import { Route as ChatRouteImport } from './app/routes/chat'
 import { Route as IndexRouteImport } from './app/routes/index'
 import { Route as authRegisterRouteImport } from './app/routes/(auth)/register'
 import { Route as authLoginRouteImport } from './app/routes/(auth)/login'
 import { Route as appDashboardRouteImport } from './app/routes/(app)/dashboard'
 
+const TakenRoute = TakenRouteImport.update({
+  id: '/taken',
+  path: '/taken',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyTasksRoute = MyTasksRouteImport.update({
+  id: '/my-tasks',
+  path: '/my-tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatRoute = ChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,12 +61,20 @@ const appDashboardRoute = appDashboardRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/chat': typeof ChatRoute
+  '/my-tasks': typeof MyTasksRoute
+  '/profile': typeof ProfileRoute
+  '/taken': typeof TakenRoute
   '/dashboard': typeof appDashboardRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/chat': typeof ChatRoute
+  '/my-tasks': typeof MyTasksRoute
+  '/profile': typeof ProfileRoute
+  '/taken': typeof TakenRoute
   '/dashboard': typeof appDashboardRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
@@ -50,18 +82,42 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/chat': typeof ChatRoute
+  '/my-tasks': typeof MyTasksRoute
+  '/profile': typeof ProfileRoute
+  '/taken': typeof TakenRoute
   '/(app)/dashboard': typeof appDashboardRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/register': typeof authRegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/login' | '/register'
+  fullPaths:
+    | '/'
+    | '/chat'
+    | '/my-tasks'
+    | '/profile'
+    | '/taken'
+    | '/dashboard'
+    | '/login'
+    | '/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/login' | '/register'
+  to:
+    | '/'
+    | '/chat'
+    | '/my-tasks'
+    | '/profile'
+    | '/taken'
+    | '/dashboard'
+    | '/login'
+    | '/register'
   id:
     | '__root__'
     | '/'
+    | '/chat'
+    | '/my-tasks'
+    | '/profile'
+    | '/taken'
     | '/(app)/dashboard'
     | '/(auth)/login'
     | '/(auth)/register'
@@ -69,6 +125,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChatRoute: typeof ChatRoute
+  MyTasksRoute: typeof MyTasksRoute
+  ProfileRoute: typeof ProfileRoute
+  TakenRoute: typeof TakenRoute
   appDashboardRoute: typeof appDashboardRoute
   authLoginRoute: typeof authLoginRoute
   authRegisterRoute: typeof authRegisterRoute
@@ -76,6 +136,34 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/taken': {
+      id: '/taken'
+      path: '/taken'
+      fullPath: '/taken'
+      preLoaderRoute: typeof TakenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-tasks': {
+      id: '/my-tasks'
+      path: '/my-tasks'
+      fullPath: '/my-tasks'
+      preLoaderRoute: typeof MyTasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat': {
+      id: '/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof ChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -109,6 +197,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChatRoute: ChatRoute,
+  MyTasksRoute: MyTasksRoute,
+  ProfileRoute: ProfileRoute,
+  TakenRoute: TakenRoute,
   appDashboardRoute: appDashboardRoute,
   authLoginRoute: authLoginRoute,
   authRegisterRoute: authRegisterRoute,

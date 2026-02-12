@@ -1,8 +1,8 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { Card } from "../../../components/ui/Card";
-import { Input } from "../../../components/ui/Input";
+import { Input, Label, FormGroup } from "../../../components/ui/Input";
 import { Button } from "../../../components/ui/Button";
 import { register } from "../../../lib/api/auth";
 import { useAppDispatch } from "../../../store/hooks";
@@ -12,8 +12,96 @@ export const Route = createFileRoute("/(auth)/register")({
   component: RegisterPage,
 });
 
+const PageWrapper = styled.div`
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: ${({ theme }) => theme.space(2)};
+  background: ${({ theme }) => theme.colors.bg};
+`;
+
+const RegCard = styled.div`
+  width: 100%;
+  max-width: 420px;
+  background: ${({ theme }) => theme.colors.panel};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radius.lg};
+  padding: ${({ theme }) => theme.space(4)};
+`;
+
+const LogoSection = styled.div`
+  text-align: center;
+  margin-bottom: ${({ theme }) => theme.space(4)};
+`;
+
+const Logo = styled.h1`
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.primary};
+`;
+
+const Subtitle = styled.p`
+  color: ${({ theme }) => theme.colors.muted};
+  margin-top: ${({ theme }) => theme.space(0.5)};
+  font-size: 0.9rem;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.space(2.5)};
+`;
+
+const ErrorMsg = styled.div`
+  color: ${({ theme }) => theme.colors.danger};
+  font-size: 0.85rem;
+  text-align: center;
+`;
+
+const SuccessMsg = styled.div`
+  color: ${({ theme }) => theme.colors.success};
+  padding: ${({ theme }) => theme.space(2.5)} 0;
+  text-align: center;
+  font-size: 0.95rem;
+`;
+
+const BottomText = styled.p`
+  text-align: center;
+  color: ${({ theme }) => theme.colors.muted};
+  font-size: 0.875rem;
+  margin-top: ${({ theme }) => theme.space(2)};
+`;
+
+const AccentLink = styled(Link)`
+  color: ${({ theme }) => theme.colors.primary};
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const LangRow = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: ${({ theme }) => theme.space(2)};
+`;
+
+const LangBtn = styled.button<{ $active?: boolean }>`
+  padding: 4px 10px;
+  background: ${({ theme, $active }) =>
+    $active ? theme.colors.primary : "transparent"};
+  color: ${({ theme, $active }) =>
+    $active ? theme.colors.bg : theme.colors.muted};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radius.sm};
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 600;
+`;
+
 function RegisterPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -50,62 +138,79 @@ function RegisterPage() {
   }
 
   return (
-    <Card style={{ maxWidth: 420, margin: "40px auto" }}>
-      <h2>{t("auth.register")}</h2>
+    <PageWrapper>
+      <RegCard>
+        <LangRow>
+          <LangBtn $active={i18n.language === "pt"} onClick={() => i18n.changeLanguage("pt")}>PT</LangBtn>
+          <LangBtn $active={i18n.language === "en"} onClick={() => i18n.changeLanguage("en")}>EN</LangBtn>
+          <LangBtn $active={i18n.language === "fr"} onClick={() => i18n.changeLanguage("fr")}>FR</LangBtn>
+        </LangRow>
 
-      {success ? (
-        <div style={{ color: "#4ade80", padding: "20px 0", textAlign: "center" }}>
-          ✓ {t("auth.registerSuccess")}
-        </div>
-      ) : (
-        <form onSubmit={onSubmit} style={{ display: "grid", gap: 12 }}>
-          <label>
-            {t("auth.displayName")}
-            <Input
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-              placeholder={t("auth.displayNamePlaceholder")}
-            />
-          </label>
+        <LogoSection>
+          <Logo>{t("app.title")}</Logo>
+          <Subtitle>{t("app.subtitle")}</Subtitle>
+        </LogoSection>
 
-          <label>
-            {t("auth.email")}
-            <Input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </label>
+        {success ? (
+          <SuccessMsg>{t("auth.registerSuccess")}</SuccessMsg>
+        ) : (
+          <Form onSubmit={onSubmit}>
+            <FormGroup>
+              <Label>{t("auth.displayName")}</Label>
+              <Input
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                placeholder={t("auth.displayNamePlaceholder")}
+              />
+            </FormGroup>
 
-          <label>
-            {t("auth.password")}
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
-            />
-          </label>
+            <FormGroup>
+              <Label>{t("auth.email")}</Label>
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                required
+              />
+            </FormGroup>
 
-          <label>
-            {t("auth.confirmPassword")}
-            <Input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </label>
+            <FormGroup>
+              <Label>{t("auth.password")}</Label>
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="********"
+                required
+                minLength={6}
+              />
+            </FormGroup>
 
-          {error && <div style={{ color: "#ff5c7a" }}>{error}</div>}
+            <FormGroup>
+              <Label>{t("auth.confirmPassword")}</Label>
+              <Input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="********"
+                required
+              />
+            </FormGroup>
 
-          <Button disabled={loading}>
-            {loading ? t("auth.loading") : t("auth.submit")}
-          </Button>
-        </form>
-      )}
-    </Card>
+            {error && <ErrorMsg>{error}</ErrorMsg>}
+
+            <Button $fullWidth disabled={loading}>
+              {loading ? t("auth.loading") : t("auth.register")}
+            </Button>
+          </Form>
+        )}
+
+        <BottomText>
+          {t("auth.hasAccount")}{" "}
+          <AccentLink to="/login">{t("auth.signIn")}</AccentLink>
+        </BottomText>
+      </RegCard>
+    </PageWrapper>
   );
 }

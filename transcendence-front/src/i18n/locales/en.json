@@ -1,8 +1,11 @@
 {
-  "app": { "title": "Transcendence" },
+  "app": {
+    "title": "Transcendence",
+    "subtitle": "Task Marketplace with ZION Token"
+  },
   "auth": {
-    "login": "Login",
-    "register": "Create account",
+    "login": "Sign In",
+    "register": "Create Account",
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm password",
@@ -14,12 +17,94 @@
     "registerSuccess": "Account created successfully!",
     "loginError": "Invalid email or password",
     "registerError": "Failed to create account",
-    "passwordMismatch": "Passwords do not match"
+    "passwordMismatch": "Passwords do not match",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create account",
+    "hasAccount": "Already have an account?",
+    "signIn": "Sign in"
   },
   "nav": {
-    "home": "Home",
+    "marketplace": "Available Tasks",
+    "myTasks": "My Tasks (Created)",
+    "takenByMe": "Taken by Me",
+    "chat": "Chat",
+    "profile": "Profile",
     "login": "Login",
     "register": "Register",
     "logout": "Logout"
+  },
+  "tasks": {
+    "newTask": "New Task",
+    "createTask": "Create Task",
+    "searchPlaceholder": "Search tasks...",
+    "allCategories": "All Categories",
+    "noTasks": "No tasks found",
+    "viewDetails": "View Details",
+    "title": "Title",
+    "description": "Description",
+    "category": "Category",
+    "categoryPlaceholder": "Start typing to see suggestions...",
+    "hashtags": "Hashtags (optional, up to 3)",
+    "reward": "Reward",
+    "location": "Location",
+    "deadline": "Deadline",
+    "creator": "Creator",
+    "takeTask": "Take Task",
+    "messageCreator": "Message Creator",
+    "markDone": "Mark as Done",
+    "proofDescription": "Describe what you did",
+    "proofPlaceholder": "Provide details about the completed work...",
+    "uploadProof": "Upload Proof (optional)",
+    "uploadClick": "Click to upload files or drag and drop",
+    "submitProof": "Submit Proof",
+    "created": "Task created successfully!",
+    "createError": "Failed to create task",
+    "taken": "Task taken successfully!",
+    "takeError": "Failed to take task",
+    "submitted": "Task submitted for approval",
+    "submitError": "Failed to submit task",
+    "approved": "Payment of {{amount}} ZION sent!",
+    "approveError": "Failed to approve",
+    "rejected": "Task rejected",
+    "rejectError": "Failed to reject",
+    "takenBy": "Taken by",
+    "openChat": "Open Chat",
+    "proofSubmitted": "Proof Submitted",
+    "noProof": "No proof provided",
+    "approve": "Approve",
+    "reject": "Reject",
+    "paid": "Paid",
+    "waitingApproval": "Waiting for Approval"
+  },
+  "chat": {
+    "conversations": "Conversations",
+    "conversation": "Conversation",
+    "directMessage": "Direct message",
+    "noConversations": "No conversations yet",
+    "selectConversation": "Select a conversation to start chatting",
+    "typePlaceholder": "Type your message...",
+    "send": "Send"
+  },
+  "wallet": {
+    "connect": "Connect Wallet",
+    "disconnect": "Disconnect",
+    "balance": "Balance"
+  },
+  "profile": {
+    "fullName": "Full Name (optional)",
+    "email": "Email",
+    "country": "Country",
+    "selectCountry": "Select Country",
+    "phone": "Phone (optional)",
+    "address": "Address (optional)",
+    "save": "Save Changes",
+    "saved": "Profile saved successfully!",
+    "saveError": "Failed to save profile",
+    "infoNote": "Do not share sensitive information publicly. Your profile details are used to facilitate task completion and communication."
+  },
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "loading": "Loading..."
   }
 }
