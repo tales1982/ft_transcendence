@@ -4,6 +4,7 @@ import tasksReducer from "./slices/tasks.slice";
 import chatReducer from "./slices/chat.slice";
 import notificationsReducer from "./slices/notifications.slice";
 import paymentReducer from "./slices/payment.slice";
+import languageReducer from "./slices/LanguagesSlices";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     chat: chatReducer,
     notifications: notificationsReducer,
     payment: paymentReducer,
+    language: languageReducer,
   },
   middleware: (g) => g({ serializableCheck: false }),
 });
