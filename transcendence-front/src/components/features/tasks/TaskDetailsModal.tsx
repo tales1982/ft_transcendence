@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { Modal } from "../../ui/Modal";
 import { Button } from "../../ui/Button";
@@ -8,86 +7,10 @@ import type { TaskResponse } from "../../../types";
 import { taskApi } from "../../../lib/api";
 import { showToast } from "../../ui/Toast";
 import { useState } from "react";
+import { Footer } from "./MarkDoneModal.styled";
+import  { InfoLabel, Description, InfoGrid, Tag, RewardValue, InfoValue, TagsRow, CreatorCard, CreatorInfo, CreatorName, CreatorSub } from "./TaskDetailsModal.styled";
 
-const InfoGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: ${({ theme }) => theme.space(2)};
-  margin: ${({ theme }) => theme.space(3)} 0;
-`;
 
-const InfoLabel = styled.h4`
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: ${({ theme }) => theme.colors.muted};
-  margin-bottom: 4px;
-`;
-
-const InfoValue = styled.p`
-  color: ${({ theme }) => theme.colors.text};
-  font-size: 0.925rem;
-`;
-
-const RewardValue = styled.p`
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: ${({ theme }) => theme.colors.primary};
-`;
-
-const Description = styled.p`
-  color: ${({ theme }) => theme.colors.textSecondary};
-  font-size: 0.925rem;
-  line-height: 1.6;
-`;
-
-const TagsRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${({ theme }) => theme.space(1)};
-  margin: ${({ theme }) => theme.space(2)} 0;
-`;
-
-const Tag = styled.span`
-  padding: ${({ theme }) => `${theme.space(0.5)} ${theme.space(1.5)}`};
-  background: ${({ theme }) => theme.colors.card};
-  border-radius: 9999px;
-  font-size: 0.8rem;
-  color: ${({ theme }) => theme.colors.textSecondary};
-`;
-
-const CreatorCard = styled.div`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.space(1.5)};
-  padding: ${({ theme }) => theme.space(2)};
-  background: ${({ theme }) => theme.colors.card};
-  border-radius: ${({ theme }) => theme.radius.md};
-  margin: ${({ theme }) => theme.space(2)} 0;
-`;
-
-const CreatorInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const CreatorName = styled.span`
-  color: ${({ theme }) => theme.colors.text};
-  font-weight: 500;
-  font-size: 0.9rem;
-`;
-
-const CreatorSub = styled.span`
-  color: ${({ theme }) => theme.colors.muted};
-  font-size: 0.8rem;
-`;
-
-const Footer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: ${({ theme }) => theme.space(1.5)};
-  padding-top: ${({ theme }) => theme.space(2)};
-  border-top: 1px solid ${({ theme }) => theme.colors.border};
-`;
 
 function formatDate(dateString?: string) {
   if (!dateString) return "—";
