@@ -5,11 +5,22 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import com.transcendence.user.entity.User;
+import org.springdoc.core.utils.SpringDocUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Configuration
 public class OpenApiConfig {
+
+    static {
+        SpringDocUtils.getConfig()
+                .addAnnotationsToIgnore(AuthenticationPrincipal.class)
+                .replaceWithClass(User.class, Void.class)
+                .replaceWithClass(UserDetails.class, Void.class);
+    }
 
     @Bean
     public OpenAPI openAPI() {

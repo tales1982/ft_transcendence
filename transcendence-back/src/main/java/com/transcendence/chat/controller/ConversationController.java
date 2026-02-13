@@ -6,8 +6,11 @@ import com.transcendence.chat.dto.MessageResponse;
 import com.transcendence.chat.service.ConversationService;
 import com.transcendence.chat.service.MessageService;
 import com.transcendence.user.entity.User;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +23,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/conversations")
 @RequiredArgsConstructor
+@Tag(name = "Chat", description = "Conversas e mensagens entre usuarios")
 public class ConversationController {
 
     private final ConversationService conversationService;
     private final MessageService messageService;
 
     @GetMapping
+    @Operation(summary = "Minhas conversas", description = "Lista todas as conversas do usuario")
     public ResponseEntity<List<ConversationResponse>> getMyConversations(@AuthenticationPrincipal User user) {
         var conversations = conversationService.getUserConversations(user.getId())
                 .stream()
@@ -35,6 +40,7 @@ public class ConversationController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Buscar conversa por ID")
     public ResponseEntity<ConversationResponse> getConversation(
             @AuthenticationPrincipal User user,
             @PathVariable Long id) {
@@ -48,6 +54,7 @@ public class ConversationController {
     }
 
     @GetMapping("/task/{taskId}")
+    @Operation(summary = "Conversa de uma task", description = "Busca ou cria a conversa associada a uma task")
     public ResponseEntity<ConversationResponse> getOrCreateTaskConversation(
             @AuthenticationPrincipal User user,
             @PathVariable Long taskId) {
@@ -57,16 +64,18 @@ public class ConversationController {
     }
 
     @GetMapping("/{id}/messages")
+    @Operation(summary = "Listar mensagens", description = "Retorna mensagens de uma conversa com paginacao")
     public ResponseEntity<Page<MessageResponse>> getMessages(
             @AuthenticationPrincipal User user,
             @PathVariable Long id,
-            Pageable pageable) {
+            @ParameterObject Pageable pageable) {
         var messages = messageService.getConversationMessages(id, user.getId(), pageable)
                 .map(MessageResponse::fromEntity);
         return ResponseEntity.ok(messages);
     }
 
     @PostMapping("/{id}/messages")
+    @Operation(summary = "Enviar mensagem", description = "Envia uma mensagem em uma conversa")
     public ResponseEntity<MessageResponse> sendMessage(
             @AuthenticationPrincipal User user,
             @PathVariable Long id,
@@ -76,6 +85,7 @@ public class ConversationController {
     }
 
     @PostMapping("/{id}/read")
+    @Operation(summary = "Marcar como lidas", description = "Marca todas as mensagens da conversa como lidas")
     public ResponseEntity<Void> markMessagesAsRead(
             @AuthenticationPrincipal User user,
             @PathVariable Long id) {

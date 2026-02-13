@@ -31,6 +31,9 @@ spring:
 server:
   port: 8080
 
+springdoc:
+  default-flat-param-object: false
+
 jwt:
   secret: bXlTZWNyZXRLZXlGb3JKV1RUb2tlbkdlbmVyYXRpb25UaGF0SXNBdExlYXN0MjU2Qml0c0xvbmcxMjM0NTY3ODk=
   expiration: 86400000 # 24 hours in milliseconds
