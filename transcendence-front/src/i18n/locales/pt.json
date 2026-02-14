@@ -102,6 +102,26 @@
     "saveError": "Falha ao salvar perfil",
     "infoNote": "Não compartilhe informações sensíveis publicamente. Os detalhes do seu perfil são usados para facilitar a conclusão de tarefas e comunicação."
   },
+  "landing": {
+    "heroTitle1": "Publique tarefas, ganhe",
+    "heroHighlight": "tokens ZION",
+    "heroTitle2": "e conecte-se com talentos",
+    "heroSubtitle": "O Transcendence é um marketplace de tarefas onde você pode criar tarefas para outros completarem ou aceitar tarefas e ganhar recompensas em tokens ZION.",
+    "heroCTA": "Comece Agora",
+    "howTitle1": "Como",
+    "howHighlight": "funciona",
+    "step1Title": "Crie uma Tarefa",
+    "step1Desc": "Descreva o que precisa ser feito, defina uma recompensa em ZION e publique para todos verem.",
+    "step2Title": "Encontre Tarefas",
+    "step2Desc": "Navegue pelas tarefas disponíveis, filtre por categoria e encontre o trabalho ideal para você.",
+    "step3Title": "Complete e Entregue",
+    "step3Desc": "Aceite uma tarefa, complete o trabalho e envie o comprovante para o criador aprovar.",
+    "step4Title": "Receba ZION",
+    "step4Desc": "Após a aprovação, os tokens ZION são transferidos automaticamente para sua carteira.",
+    "tasksTitle1": "Tarefas",
+    "tasksHighlight": "Disponíveis",
+    "loginToTake": "Faça login para aceitar esta tarefa"
+  },
   "common": {
     "cancel": "Cancelar",
     "delete": "Excluir",

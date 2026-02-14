@@ -119,7 +119,7 @@ function LoginPage() {
       const res = await login({ email, password });
       dispatch(setCredentials(res));
       setSuccess(true);
-      setTimeout(() => navigate({ to: "/" }), 1500);
+      setTimeout(() => navigate({ to: "/marketplace" }), 1500);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : t("auth.loginError");
       setError(message);

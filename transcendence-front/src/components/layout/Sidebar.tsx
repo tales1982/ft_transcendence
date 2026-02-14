@@ -147,7 +147,7 @@ export function Sidebar({ open, onClose, onNewTask }: SidebarProps) {
       <Logo>{t("app.title")}</Logo>
 
       <Nav>
-        <NavLink to="/" $active={isActive("/")} onClick={handleClick}>
+        <NavLink to="/marketplace" $active={isActive("/marketplace")} onClick={handleClick}>
           <NavIcon>&#9750;</NavIcon>
           {t("nav.marketplace")}
         </NavLink>

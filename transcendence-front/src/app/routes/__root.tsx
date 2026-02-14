@@ -12,26 +12,29 @@ function RootLayout() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
   const isAuthenticated = useAppSelector((s) => s.auth.status === "authenticated");
-  const isAuthPage = pathname === "/login" || pathname === "/register";
+  const isPublicPage =
+    pathname === "/" || pathname === "/login" || pathname === "/register";
 
   useEffect(() => {
-    if (!isAuthenticated && !isAuthPage) {
+    if (!isAuthenticated && !isPublicPage) {
       navigate({ to: "/login", replace: true });
     }
-  }, [isAuthenticated, isAuthPage, navigate]);
+  }, [isAuthenticated, isPublicPage, navigate]);
 
-  if (!isAuthenticated && !isAuthPage) {
+  if (!isAuthenticated && !isPublicPage) {
     return null;
   }
 
+  const showShell = isAuthenticated && !isPublicPage;
+
   return (
     <>
-      {isAuthPage ? (
-        <Outlet />
-      ) : (
+      {showShell ? (
         <AppShell>
           <Outlet />
         </AppShell>
+      ) : (
+        <Outlet />
       )}
       <ToastProvider />
     </>

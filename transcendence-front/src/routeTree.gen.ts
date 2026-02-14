@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './app/routes/__root'
 import { Route as TakenRouteImport } from './app/routes/taken'
 import { Route as ProfileRouteImport } from './app/routes/profile'
 import { Route as MyTasksRouteImport } from './app/routes/my-tasks'
+import { Route as MarketplaceRouteImport } from './app/routes/marketplace'
 import { Route as ChatRouteImport } from './app/routes/chat'
 import { Route as IndexRouteImport } from './app/routes/index'
 import { Route as authRegisterRouteImport } from './app/routes/(auth)/register'
@@ -31,6 +32,11 @@ const ProfileRoute = ProfileRouteImport.update({
 const MyTasksRoute = MyTasksRouteImport.update({
   id: '/my-tasks',
   path: '/my-tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketplaceRoute = MarketplaceRouteImport.update({
+  id: '/marketplace',
+  path: '/marketplace',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChatRoute = ChatRouteImport.update({
@@ -62,6 +68,7 @@ const appDashboardRoute = appDashboardRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
+  '/marketplace': typeof MarketplaceRoute
   '/my-tasks': typeof MyTasksRoute
   '/profile': typeof ProfileRoute
   '/taken': typeof TakenRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
+  '/marketplace': typeof MarketplaceRoute
   '/my-tasks': typeof MyTasksRoute
   '/profile': typeof ProfileRoute
   '/taken': typeof TakenRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
+  '/marketplace': typeof MarketplaceRoute
   '/my-tasks': typeof MyTasksRoute
   '/profile': typeof ProfileRoute
   '/taken': typeof TakenRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/chat'
+    | '/marketplace'
     | '/my-tasks'
     | '/profile'
     | '/taken'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/chat'
+    | '/marketplace'
     | '/my-tasks'
     | '/profile'
     | '/taken'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/chat'
+    | '/marketplace'
     | '/my-tasks'
     | '/profile'
     | '/taken'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChatRoute: typeof ChatRoute
+  MarketplaceRoute: typeof MarketplaceRoute
   MyTasksRoute: typeof MyTasksRoute
   ProfileRoute: typeof ProfileRoute
   TakenRoute: typeof TakenRoute
@@ -155,6 +168,13 @@ declare module '@tanstack/react-router' {
       path: '/my-tasks'
       fullPath: '/my-tasks'
       preLoaderRoute: typeof MyTasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketplace': {
+      id: '/marketplace'
+      path: '/marketplace'
+      fullPath: '/marketplace'
+      preLoaderRoute: typeof MarketplaceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/chat': {
@@ -198,6 +218,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChatRoute: ChatRoute,
+  MarketplaceRoute: MarketplaceRoute,
   MyTasksRoute: MyTasksRoute,
   ProfileRoute: ProfileRoute,
   TakenRoute: TakenRoute,

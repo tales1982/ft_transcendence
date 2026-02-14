@@ -102,6 +102,26 @@
     "saveError": "Failed to save profile",
     "infoNote": "Do not share sensitive information publicly. Your profile details are used to facilitate task completion and communication."
   },
+  "landing": {
+    "heroTitle1": "Post tasks, earn",
+    "heroHighlight": "ZION tokens",
+    "heroTitle2": "and connect with talent",
+    "heroSubtitle": "Transcendence is a task marketplace where you can create tasks for others to complete or accept tasks and earn rewards in ZION tokens.",
+    "heroCTA": "Get Started",
+    "howTitle1": "How does it",
+    "howHighlight": "work",
+    "step1Title": "Create a Task",
+    "step1Desc": "Describe what needs to be done, set a ZION reward and publish it for everyone to see.",
+    "step2Title": "Find Tasks",
+    "step2Desc": "Browse available tasks, filter by category and find the perfect work for you.",
+    "step3Title": "Complete & Deliver",
+    "step3Desc": "Accept a task, complete the work and submit proof for the creator to approve.",
+    "step4Title": "Earn ZION",
+    "step4Desc": "After approval, ZION tokens are automatically transferred to your wallet.",
+    "tasksTitle1": "Available",
+    "tasksHighlight": "Tasks",
+    "loginToTake": "Log in to take this task"
+  },
   "common": {
     "cancel": "Cancel",
     "delete": "Delete",

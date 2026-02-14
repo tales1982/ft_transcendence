@@ -128,7 +128,7 @@ function RegisterPage() {
       const res = await register({ email, password, displayName: displayName || undefined });
       dispatch(setCredentials(res));
       setSuccess(true);
-      setTimeout(() => navigate({ to: "/" }), 1500);
+      setTimeout(() => navigate({ to: "/marketplace" }), 1500);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : t("auth.registerError");
       setError(message);
